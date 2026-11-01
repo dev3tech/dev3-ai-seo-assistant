@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DEV3 AI SEO Assistant for Yoast &amp; Rank Math: Documentation</title>
+<style>
+:root { --brand: #4f46e5; --text: #1f2328; --muted: #4b5563; --line: #e3e6eb; --soft: #f6f7fb; }
+* { box-sizing: border-box; }
+body { margin: 0; font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--text); background: #fff; }
+header { background: linear-gradient(135deg, #4f46e5, #0891b2); color: #fff; padding: 40px 16px; }
+header .wrap, main { max-width: 980px; margin: 0 auto; }
+header h1 { margin: 0 0 6px; font-size: clamp(24px, 4vw, 34px); }
+header p { margin: 0; opacity: .9; }
+nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid var(--line); overflow-x: auto; white-space: nowrap; padding: 0 16px; z-index: 2; }
+nav a { display: inline-block; padding: 12px 10px; color: var(--muted); text-decoration: none; font-size: 14px; }
+nav a:hover, nav a:focus { color: var(--brand); }
+main { padding: 8px 16px 64px; }
+h2 { margin-top: 48px; padding-top: 8px; border-top: 1px solid var(--line); font-size: 24px; }
+h3 { margin-top: 28px; font-size: 18px; }
+code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13.5px; }
+code { background: var(--soft); padding: 2px 6px; border-radius: 4px; }
+pre { background: #0f172a; color: #e2e8f0; padding: 16px; border-radius: 8px; overflow-x: auto; }
+pre code { background: none; padding: 0; color: inherit; }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; display: block; overflow-x: auto; }
+th, td { text-align: left; border-bottom: 1px solid var(--line); padding: 8px 10px; vertical-align: top; }
+th { background: var(--soft); }
+.note { background: #eef2ff; border-left: 4px solid var(--brand); padding: 12px 16px; border-radius: 6px; }
+.shots { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.shots figure { margin: 0; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.shots img { width: 100%; height: 220px; object-fit: cover; object-position: top; display: block; }
+.shots figcaption { padding: 8px 12px; font-size: 14px; color: var(--muted); }
+</style>
+</head>
+<body>
+<header><div class="wrap">
+	<h1>DEV3 AI SEO Assistant for Yoast &amp; Rank Math</h1>
+	<p>Version 1.0.0 · AI meta, schema, internal links, content gaps and FAQ blocks, written into Yoast SEO and Rank Math as reviewable drafts.</p>
+</div></header>
+<nav aria-label="Sections"><a href="#install">Install</a><a href="#key">Gemini key</a><a href="#editor">Editor sidebar</a><a href="#bulk">Bulk &amp; review</a><a href="#history">History &amp; undo</a><a href="#links">Internal links</a><a href="#gaps">Content gaps</a><a href="#schema">Schema &amp; FAQ</a><a href="#noai">Without AI</a><a href="#settings">Settings</a><a href="#hooks">Hooks</a><a href="#faq">FAQ</a><a href="#changelog">Changelog</a></nav>
+<main>
+<div class="shots">
+	<figure><img src="screenshots/1-dashboard.png" alt="Dashboard"><figcaption>Dashboard</figcaption></figure>
+	<figure><img src="screenshots/2-editor-sidebar-snippet.png" alt="Editor sidebar"><figcaption>Editor sidebar</figcaption></figure>
+	<figure><img src="screenshots/3-editor-content-gaps.png" alt="Content gaps"><figcaption>Content gaps &amp; outline</figcaption></figure>
+	<figure><img src="screenshots/4-review-queue-diff.png" alt="Review queue"><figcaption>Review queue</figcaption></figure>
+	<figure><img src="screenshots/5-post-tools.png" alt="Post tools"><figcaption>Post tools in wp-admin</figcaption></figure>
+	<figure><img src="screenshots/6-mobile-post-tools.png" alt="Mobile"><figcaption>Mobile layout</figcaption></figure>
+</div>
+
+<h2 id="install">Installation</h2>
+<ol>
+	<li>WordPress 6.0+ and PHP 7.4+ (tested on PHP 8.3). The editor sidebar needs the block editor.</li>
+	<li>Plugins &gt; Add New &gt; Upload Plugin, choose <code>dev3-ai-seo-assistant.zip</code>, activate.</li>
+	<li>Install and activate <strong>Yoast SEO</strong> or <strong>Rank Math</strong> (free is enough). DEV3 detects it automatically. With Rank Math, finish or skip its setup wizard so Rank Math prints its head tags.</li>
+	<li>Optional: SEOPress or All in One SEO are supported as well. With no SEO plugin, DEV3 stores the fields itself and prints the title, meta description, Open Graph tags and JSON-LD.</li>
+</ol>
+
+<h2 id="key">Google Gemini API key</h2>
+<ol>
+	<li>Create a key at <a href="https://aistudio.google.com/apikey">Google AI Studio</a>.</li>
+	<li>Open <strong>DEV3 AI SEO &gt; API Config</strong>, paste the key, click Validate, then Save. The key is stored encrypted and never sent to the browser. You can also define <code>DEV3SE_GEMINI_API_KEY</code> in <code>wp-config.php</code>.</li>
+	<li>Pick models (default <code>gemini-2.5-flash</code>; embeddings <code>gemini-embedding-001</code>), set a monthly budget, turn AI off globally or mask personal data in prompts.</li>
+</ol>
+<p class="note">Everything except the AI buttons works without a key: checks, scores, reports, basic suggestions, word-match link suggestions, FAQ from question headings, and history.</p>
+
+<h2 id="editor">Editor sidebar</h2>
+<p>Click the <strong>DEV3 AI SEO</strong> icon in the editor toolbar. Sections:</p>
+<ul>
+	<li><strong>Checks</strong>: title and description length, keyword in title, description, introduction, subheadings and URL, keyword density, cannibalisation, content length, subheadings, image alt text, internal links in and out. Score 0-100.</li>
+	<li><strong>Snippet &amp; meta</strong>: Google-style preview (desktop/mobile), current values with character and pixel meters. Choose the fields and click <em>Generate with DEV3 AI</em> or <em>Basic suggestions</em>. Each field becomes a draft: Changes / Side by side / Draft views, up to 3 suggestions, Edit, Apply, Reject. Applying writes into the SEO plugin and updates its own editor panel at once, so saving the post keeps the value.</li>
+	<li><strong>Schema</strong>: suggested schema type plus extra JSON-LD pieces, as JSON drafts.</li>
+	<li><strong>Internal links</strong>: related posts with a highlighted anchor in its paragraph. <em>Insert link</em> adds it to that paragraph block.</li>
+	<li><strong>Content gaps &amp; outline</strong>: coverage score, missing subtopics, questions, terms and an outline. <em>Insert missing sections</em> appends headings with writing notes; <em>Answer these in an FAQ</em> sends the questions to the FAQ section.</li>
+	<li><strong>FAQ</strong>: generate or collect questions, edit them, then <em>Insert FAQ block</em>.</li>
+	<li><strong>History</strong>: this post's applied changes with Undo.</li>
+</ul>
+
+<h2 id="bulk">Bulk optimize &amp; Review queue</h2>
+<ol>
+	<li><strong>Bulk optimize</strong>: filter by search, post type, status or issue (no meta description, title too long, orphan…). Select posts (or use “All matching the filter”, up to 2,000), choose fields, writer (DEV3 AI or Basic rules) and “Only fill empty fields”, then start. The run is a background job with progress, cancel and retry.</li>
+	<li><strong>Review queue</strong>: drafts per field with a diff against the live value. Apply or reject one, select several, or <em>Apply all pending of this run</em> (background job). The Posts list bulk action “Optimize with DEV3 AI” opens Bulk optimize with those posts.</li>
+	<li>If a field changed after its draft was made, Apply shows the current value and asks before overwriting.</li>
+</ol>
+
+<h2 id="history">History &amp; undo</h2>
+<p>Every applied draft stores the value before and after, the user and the time. Undo restores the old value (or removes the key if it was empty). If the value changed since, Undo asks first. Runs can be undone as a whole from History (filter by run). Post content changes also create normal WordPress revisions.</p>
+
+<h2 id="links">Internal links</h2>
+<p>With DEV3 AI, published posts are embedded (title, keyword, excerpt, headings, opening text) and kept fresh when posts change (setting “Keep the link index fresh”). Build or update the index from Dashboard or Internal links. Suggestions never link a post to itself or to posts it already links to, and anchors must exist word for word in the paragraph. Without AI, suggestions use TF-IDF word matching. The report lists inbound and outbound links per post and orphans.</p>
+
+<h2 id="gaps">Content gaps</h2>
+<p>The site report lists duplicate SEO titles, keyword cannibalisation, posts without a meta description, thin content, orphans and images without alt text. <em>Suggest topics with DEV3 AI</em> proposes new articles with a keyword, the reason and which posts should link to them.</p>
+
+<h2 id="schema">Schema &amp; FAQ output</h2>
+<table>
+	<tr><th>SEO plugin</th><th>Schema type</th><th>Extra JSON-LD</th><th>FAQ block</th></tr>
+	<tr><td>Yoast SEO</td><td>Yoast Schema tab (page type / article type)</td><td>Added to Yoast's graph (<code>wpseo_schema_graph</code>)</td><td>Yoast FAQ block</td></tr>
+	<tr><td>Rank Math</td><td>Replaces the main Article/WebPage type in Rank Math's graph</td><td>Added via <code>rank_math/json_ld</code></td><td>Rank Math FAQ block</td></tr>
+	<tr><td>SEOPress / AIOSEO / none</td><td>DEV3 field</td><td>Printed as its own JSON-LD script</td><td>Core Details blocks + DEV3 FAQPage schema</td></tr>
+</table>
+<p>FAQPage schema is printed once: DEV3 skips its own FAQ piece when the SEO plugin's FAQ block is in the post. Shortcode <code>[dev3se_faq id="123"]</code> prints a stored FAQ anywhere.</p>
+
+<h2 id="noai">Using it without AI</h2>
+<p>Basic suggestions: SEO title from the post title plus brand when it fits, description from the excerpt or opening sentences cut at a sentence, focus keyword from title phrases the text uses most, schema type from simple signals, FAQ from headings that end with “?”.</p>
+
+<h2 id="settings">Settings</h2>
+<table>
+	<tr><th>Setting</th><th>What it does</th></tr>
+	<tr><td>Write into</td><td>Auto-detect, or force Yoast SEO, Rank Math, SEOPress, All in One SEO or DEV3 native fields.</td></tr>
+	<tr><td>Title / description limits</td><td>Used by checks, meters and generators (default 60 and 120-155 characters).</td></tr>
+	<tr><td>Separator, brand, brand suffix</td><td>How basic and AI titles add your brand.</td></tr>
+	<tr><td>Tone, language, house style</td><td>Passed to DEV3 AI prompts.</td></tr>
+	<tr><td>Suggestions per post, minimum similarity, auto index</td><td>Internal links.</td></tr>
+	<tr><td>Content types, score column</td><td>Which post types DEV3 works on.</td></tr>
+	<tr><td>Native meta output, schema output</td><td>Front-end output toggles.</td></tr>
+</table>
+
+<h2 id="hooks">Hooks for developers</h2>
+<table>
+	<tr><th>Hook</th><th>Type</th><th>Use</th></tr>
+	<tr><td><code>dev3se_adapters</code></td><td>filter</td><td>Add an SEO plugin adapter (subclass <code>Dev3\AiSeoAssistant\Seo\Adapter</code>).</td></tr>
+	<tr><td><code>dev3se_adapter</code></td><td>filter</td><td>Force the adapter id.</td></tr>
+	<tr><td><code>dev3se_post_types</code></td><td>filter</td><td>Post types DEV3 works on.</td></tr>
+	<tr><td><code>dev3se_schema_pieces</code></td><td>filter</td><td>JSON-LD pieces output for a post.</td></tr>
+	<tr><td><code>dev3se_corpus_limit</code></td><td>filter</td><td>Posts scanned by reports and the link graph (default 3000).</td></tr>
+	<tr><td><code>dev3se_after_write</code></td><td>action</td><td>After DEV3 wrote SEO fields (post id, adapter).</td></tr>
+	<tr><td><code>dev3se_draft_applied</code></td><td>action</td><td>After a draft was applied (draft, history id).</td></tr>
+	<tr><td><code>dev3se_prompt_dev3se_meta</code> (and <code>_schema</code>, <code>_anchors</code>, <code>_gaps</code>, <code>_faq</code>, <code>_topics</code>)</td><td>filter</td><td>Change a prompt template.</td></tr>
+	<tr><td><code>dev3se_ai_guard</code>, <code>dev3se_model_prices</code>, <code>dev3se_mask_pii</code></td><td>filter</td><td>Core AI controls.</td></tr>
+</table>
+<p>REST namespace: <code>dev3se/v1</code> (status, posts, posts/&lt;id&gt;/meta|schema|links|gaps|faq, drafts, history, bulk, index, report). All routes need a logged-in user, a REST nonce and the right capability (<code>edit_post</code> for a post, <code>manage_options</code> for site-wide tools).</p>
+
+<h2 id="faq">FAQ</h2>
+<h3>Will it overwrite what I wrote?</h3><p>No. Drafts never change anything until applied, “Only fill empty fields” skips existing values, and Apply/Undo check for newer edits.</p>
+<h3>Rank Math title does not change on the site.</h3><p>Rank Math only prints head tags after its setup wizard has been completed or skipped.</p>
+<h3>Can editors and authors use it?</h3><p>Yes, in the editor sidebar for posts they can edit. Bulk runs, reports and settings are for administrators (filter <code>dev3se_manage_capability</code>).</p>
+<h3>Privacy</h3><p>Only the fields a feature needs are sent to Google Gemini. A privacy-policy snippet is added to Settings &gt; Privacy, and the usage log is covered by the personal data exporter/eraser.</p>
+
+<h2 id="changelog">Changelog</h2>
+<h3>1.0.0</h3><ul><li>Initial release.</li></ul>
+</main>
+</body>
+</html>

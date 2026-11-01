@@ -1,0 +1,98 @@
+/* Shared DEV3 SEO components (admin app + editor sidebar). Scoped to .dev3se-root. */
+.dev3se-root .dev3se-help { margin: 0; color: var( --dev3se-text-subtle ); font-size: 12px; line-height: 1.5; }
+.dev3se-root .dev3se-muted { color: var( --dev3se-text-subtle ); }
+.dev3se-root .dev3se-label { margin: 0 0 4px; font-size: 12px; font-weight: 600; letter-spacing: .02em; text-transform: uppercase; color: var( --dev3se-text-muted ); }
+.dev3se-root .dev3se-serp-wrap, .dev3se-root .dev3se-draft, .dev3se-root .dev3se-history li, .dev3se-root .dev3se-links li { min-width: 0; }
+
+/* Search snippet */
+.dev3se-root .dev3se-serp-wrap { display: grid; gap: 8px; }
+.dev3se-root .dev3se-serp { font-family: Arial, Helvetica, sans-serif; background: #fff; border: 1px solid var( --dev3se-border ); border-radius: var( --dev3se-radius ); padding: 14px 16px; max-width: 640px; overflow: hidden; }
+.dev3se-root .dev3se-serp.is-mobile { max-width: 380px; border-radius: 16px; }
+.dev3se-root .dev3se-serp__site { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; min-width: 0; }
+.dev3se-root .dev3se-serp__site > span:last-child { display: grid; min-width: 0; }
+.dev3se-root .dev3se-serp__favicon { flex: none; width: 26px; height: 26px; border-radius: 50%; background: #f1f3f4; border: 1px solid #dadce0; display: grid; place-items: center; font-size: 12px; font-weight: 700; color: #4d5156; }
+.dev3se-root .dev3se-serp__name { font-size: 14px; color: #202124; line-height: 1.3; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dev3se-root .dev3se-serp__url { font-size: 12px; color: #4d5156; line-height: 1.3; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dev3se-root .dev3se-serp__title { color: #1a0dab; font-size: 20px; line-height: 1.3; margin: 2px 0 4px; overflow-wrap: anywhere; }
+.dev3se-root .dev3se-serp.is-mobile .dev3se-serp__title { font-size: 18px; }
+.dev3se-root .dev3se-serp__desc { color: #4d5156; font-size: 14px; line-height: 1.58; overflow-wrap: anywhere; }
+.dev3se-root .dev3se-serp__desc.is-empty { font-style: italic; color: #70757a; }
+
+/* Length meter */
+.dev3se-root .dev3se-meter { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.dev3se-root .dev3se-meter__bar { flex: 1; height: 6px; background: var( --dev3se-surface-3 ); border-radius: 3px; overflow: hidden; min-width: 40px; max-width: 220px; }
+.dev3se-root .dev3se-meter__bar span { display: block; height: 100%; border-radius: 3px; background: var( --dev3se-success ); }
+.dev3se-root .dev3se-meter.is-warn .dev3se-meter__bar span { background: #d97706; }
+.dev3se-root .dev3se-meter.is-bad .dev3se-meter__bar span { background: var( --dev3se-danger ); }
+.dev3se-root .dev3se-meter__text { font-size: 12px; color: var( --dev3se-text-subtle ); white-space: nowrap; }
+
+/* Values list */
+.dev3se-root .dev3se-values { margin: 0; display: grid; gap: 10px; }
+.dev3se-root .dev3se-values > div { display: grid; gap: 2px; padding-bottom: 10px; border-bottom: 1px solid var( --dev3se-border ); }
+.dev3se-root .dev3se-values > div:last-child { border-bottom: 0; padding-bottom: 0; }
+.dev3se-root .dev3se-values dt { font-size: 12px; font-weight: 600; color: var( --dev3se-text-muted ); }
+.dev3se-root .dev3se-values dd { margin: 0; overflow-wrap: anywhere; display: flex; flex-wrap: wrap; gap: 4px; flex-direction: column; }
+.dev3se-root .dev3se-values dd .dev3se-ui-badge { align-self: flex-start; }
+
+/* Field picker */
+.dev3se-root .dev3se-fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.dev3se-root .dev3se-fieldset legend { padding: 0; margin-bottom: 6px; font-size: 13px; font-weight: 600; }
+.dev3se-root .dev3se-checkgrid { display: grid; grid-template-columns: repeat( auto-fill, minmax( 150px, 1fr ) ); gap: 4px 16px; }
+
+/* Checks */
+.dev3se-root .dev3se-checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.dev3se-root .dev3se-checks li { display: grid; grid-template-columns: auto 1fr; gap: 8px; align-items: start; font-size: 13px; }
+.dev3se-root .dev3se-checks .dev3se-ui-badge { min-width: 72px; justify-content: flex-start; }
+.dev3se-root .dev3se-checks__text { overflow-wrap: anywhere; }
+
+/* Score ring */
+.dev3se-root .dev3se-scorering { position: relative; flex: none; display: inline-grid; place-items: center; }
+.dev3se-root .dev3se-scorering svg { position: absolute; inset: 0; transform: rotate( -90deg ); }
+.dev3se-root .dev3se-scorering circle { fill: none; stroke-width: 7; }
+.dev3se-root .dev3se-scorering__track { stroke: var( --dev3se-surface-3 ); }
+.dev3se-root .dev3se-scorering__value { stroke: var( --dev3se-success ); stroke-linecap: round; transition: stroke-dashoffset .4s; }
+.dev3se-root .dev3se-scorering.is-ok .dev3se-scorering__value { stroke: #d97706; }
+.dev3se-root .dev3se-scorering.is-poor .dev3se-scorering__value { stroke: var( --dev3se-danger ); }
+.dev3se-root .dev3se-scorering__num { position: relative; font-weight: 700; font-size: 16px; color: var( --dev3se-text ); }
+
+/* Drafts */
+.dev3se-root .dev3se-draft { display: grid; gap: 8px; }
+.dev3se-root .dev3se-alts { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.dev3se-root .dev3se-alts__label { font-size: 12px; font-weight: 600; color: var( --dev3se-text-muted ); margin-right: 2px; }
+.dev3se-root .dev3se-alts__opt { min-height: 30px; padding: 4px 10px; border-radius: 999px; border: 1px solid var( --dev3se-border-strong ); background: var( --dev3se-surface ); color: var( --dev3se-text ); font-size: 12px; cursor: pointer; }
+.dev3se-root .dev3se-alts__opt:hover { border-color: var( --dev3se-brand ); }
+.dev3se-root .dev3se-alts__opt.is-active { background: var( --dev3se-brand-soft ); border-color: var( --dev3se-brand ); color: var( --dev3se-brand-ink ); font-weight: 600; }
+.dev3se-root .dev3se-alts__opt:focus-visible { outline: none; box-shadow: var( --dev3se-focus ); }
+.dev3se-root .dev3se-content-draft .dev3se-ui-diff { max-height: 360px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; }
+
+/* History */
+.dev3se-root .dev3se-history { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.dev3se-root .dev3se-history li { display: grid; gap: 6px; padding: 10px 12px; border: 1px solid var( --dev3se-border ); border-radius: var( --dev3se-radius ); background: var( --dev3se-surface ); justify-items: start; }
+.dev3se-root .dev3se-history li > .dev3se-ui-diff { justify-self: stretch; max-height: 180px; overflow: auto; overflow-wrap: anywhere; }
+.dev3se-root .dev3se-history li.is-undone { opacity: .7; }
+.dev3se-root .dev3se-history__head { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; }
+
+/* Links */
+.dev3se-root .dev3se-links { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.dev3se-root .dev3se-links li { display: grid; gap: 6px; padding: 10px 12px; border: 1px solid var( --dev3se-border ); border-radius: var( --dev3se-radius ); background: var( --dev3se-surface ); justify-items: start; }
+.dev3se-root .dev3se-links li.is-done { border-color: #a7f3d0; background: var( --dev3se-success-soft ); }
+.dev3se-root .dev3se-links__head { display: flex; gap: 8px; align-items: flex-start; justify-content: space-between; justify-self: stretch; }
+.dev3se-root .dev3se-links__head strong { overflow-wrap: anywhere; }
+.dev3se-root .dev3se-links__ctx { margin: 0; font-size: 13px; color: var( --dev3se-text-muted ); overflow-wrap: anywhere; }
+.dev3se-root mark.dev3se-anchor { background: #fef08a; color: inherit; padding: 0 2px; border-radius: 3px; text-decoration: underline; text-decoration-color: var( --dev3se-brand ); text-underline-offset: 2px; }
+
+/* Gaps */
+.dev3se-root .dev3se-gapscore { display: flex; gap: 12px; align-items: center; }
+.dev3se-root .dev3se-gapscore p { margin: 0; }
+.dev3se-root .dev3se-bullets { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 13px; }
+.dev3se-root .dev3se-bullets li { overflow-wrap: anywhere; }
+.dev3se-root .dev3se-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.dev3se-root .dev3se-outlinelist { margin: 0 0 10px; padding-left: 20px; display: grid; gap: 6px; font-size: 13px; }
+.dev3se-root .dev3se-outlinelist li { display: grid; gap: 2px; }
+.dev3se-root .dev3se-outlinelist li.is-h3 { margin-left: 16px; list-style-type: circle; }
+.dev3se-root .dev3se-faqitem { display: grid; gap: 8px; padding-bottom: 12px; border-bottom: 1px dashed var( --dev3se-border ); justify-items: start; }
+.dev3se-root .dev3se-faqitem > :not(button) { justify-self: stretch; }
+.dev3se-root ul.dev3se-bullets { list-style: disc outside; }
+.dev3se-root ul.dev3se-bullets li, .dev3se-root ol.dev3se-outlinelist li { display: list-item; margin: 0; }
+.dev3se-root ol.dev3se-outlinelist { list-style: decimal outside; }
+.dev3se-root ol.dev3se-outlinelist li > span { display: block; }
